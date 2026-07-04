@@ -1,0 +1,32 @@
+name: Repository Validation
+
+on:
+  push:
+    branches:
+      - main
+      - development
+      - "feature/**"
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  validate-structure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify required directories
+        run: |
+          test -d src
+          test -d docs
+          test -d models
+          test -d tests
+          test -d .github/workflows
+          test -d src/layer1-ingestion
+          test -d src/layer2-detection
+          test -d src/layer3-xai
+          test -d src/layer4-hitl
